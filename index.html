@@ -14,24 +14,22 @@
     </header>
 
     <div class="search-box">
-      <input type="text" id="studentCode" placeholder="Enter Student Code (e.g., 2640022)">
+      <input type="text" id="studentCode" placeholder="Enter Student Code (e.g., 2640022 or 24-D-0000036)">
       <button onclick="fetchStudentData()">View Grades</button>
     </div>
 
-    <div id="loading" class="hidden">Searching student record...</div>
+    <div id="loading" class="hidden">Searching records...</div>
     <div id="errorMsg" class="error-msg"></div>
 
     <div id="portalContent" class="hidden">
-      <!-- Student Profile -->
       <div class="card student-info">
-        <h3>Student Profile</h3>
+        <h3>Student Information</h3>
         <p><strong>Name:</strong> <span id="infoName"></span></p>
         <p><strong>Student Code:</strong> <span id="infoCode"></span></p>
         <p><strong>Section:</strong> <span id="infoSection"></span></p>
         <p><strong>Period:</strong> <span id="infoQuarter"></span></p>
       </div>
 
-      <!-- Grades Display Table -->
       <div class="card">
         <h3>Consolidated Grades</h3>
         <table class="grades-table">

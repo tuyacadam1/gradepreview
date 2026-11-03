@@ -27,33 +27,29 @@ async function fetchStudentData() {
       return;
     }
 
-    // Display Student Profile Details
-    const std = result.student;
-    const fullName = `${std.lastName}, ${std.firstName} ${std.middleName || ''}`.trim();
-    document.getElementById("infoName").innerText = fullName;
-    document.getElementById("infoCode").innerText = std.code;
-    document.getElementById("infoSection").innerText = std.section;
+    const d = result.data;
+    
+    // Fill Student Information
+    document.getElementById("infoName").innerText = d.name || "--";
+    document.getElementById("infoCode").innerText = d.code || "--";
+    document.getElementById("infoSex").innerText = d.sex || "--";
+    document.getElementById("infoSection").innerText = d.section || "--";
+    document.getElementById("infoQuarter").innerText = d.quarter || "1st Quarter";
 
-    // Display Grade Details
-    const g = result.grades;
-    if (g) {
-      document.getElementById("infoQuarter").innerText = g.quarter || "1st Quarter";
-      document.getElementById("gFilipino").innerText = g.filipino ?? "--";
-      document.getElementById("gEnglish").innerText = g.english ?? "--";
-      document.getElementById("gMath").innerText = g.math ?? "--";
-      document.getElementById("gScience").innerText = g.science ?? "--";
-      document.getElementById("gAP").innerText = g.aralingPanlipunan ?? "--";
-      document.getElementById("gESP").innerText = g.esp ?? "--";
-      document.getElementById("gTLE").innerText = g.tle ?? "--";
-      document.getElementById("gMAPEH").innerText = g.mapeh ?? "--";
-      document.getElementById("genAve").innerText = g.genAve ?? "--";
-    } else {
-      errorMsg.innerText = "Student found in enrollment, but grade record is missing.";
-    }
+    // Fill Subject Grades
+    document.getElementById("gFilipino").innerText = d.filipino ?? "--";
+    document.getElementById("gEnglish").innerText = d.english ?? "--";
+    document.getElementById("gMath").innerText = d.math ?? "--";
+    document.getElementById("gScience").innerText = d.science ?? "--";
+    document.getElementById("gAP").innerText = d.aralingPanlipunan ?? "--";
+    document.getElementById("gESP").innerText = d.esp ?? "--";
+    document.getElementById("gTLE").innerText = d.tle ?? "--";
+    document.getElementById("gMAPEH").innerText = d.mapeh ?? "--";
+    document.getElementById("genAve").innerText = d.genAve ?? "--";
 
     content.classList.remove("hidden");
   } catch (err) {
     loading.classList.add("hidden");
-    errorMsg.innerText = "Unable to load data. Please check your network or API URL.";
+    errorMsg.innerText = "Unable to connect to the grade database. Check your connection or API URL.";
   }
 }

@@ -1,1 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Grade Portal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h2>Gingoog City Colleges, Inc.</h2>
+      <p>Student Grade Portal</p>
+    </header>
 
+    <div class="search-box">
+      <input type="text" id="studentCode" placeholder="Enter Student Code (e.g., 2640022)">
+      <button onclick="fetchStudentData()">Search</button>
+    </div>
+
+    <div id="loading" class="hidden">Searching records...</div>
+    <div id="errorMsg" class="error-msg"></div>
+
+    <div id="portalContent" class="hidden">
+      <div class="card student-info">
+        <h3>Student Information</h3>
+        <p><strong>Name:</strong> <span id="infoName"></span></p>
+        <p><strong>Student Code:</strong> <span id="infoCode"></span></p>
+        <p><strong>Section:</strong> <span id="infoSection"></span></p>
+      </div>
+
+      <form id="gradeForm" onsubmit="updateGrades(event)">
+        <div class="card">
+          <h3>Academic Performance (1st Quarter)</h3>
+          <div class="grid-form">
+            <label>Filipino <input type="number" step="0.01" id="filipino" required></label>
+            <label>English <input type="number" step="0.01" id="english" required></label>
+            <label>Mathematics <input type="number" step="0.01" id="math" required></label>
+            <label>Science <input type="number" step="0.01" id="science" required></label>
+            <label>Araling Panlipunan <input type="number" step="0.01" id="aralingPanlipunan" required></label>
+            <label>Edukasyon sa Pagpapakakatao <input type="number" step="0.01" id="esp" required></label>
+            <label>Technology & Livelihood <input type="number" step="0.01" id="tle" required></label>
+            <label>MAPEH <input type="number" step="0.01" id="mapeh" required></label>
+          </div>
+          <div class="gen-ave-box">
+            <strong>General Average:</strong> <span id="genAve">--</span>
+          </div>
+          <button type="submit" class="btn-save">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

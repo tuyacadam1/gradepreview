@@ -1,3 +1,4 @@
+// Replace with your Google Apps Script Web App URL
 const API_URL = "https://script.google.com/macros/s/AKfycbw92W3A30tsfcMwdmVrJXFKXcgMjbIgMPLdRy_z55dwfPAbCm8vWoBQm3pWTb6hTdrt/exec";
 
 async function fetchStudentData() {
@@ -26,13 +27,14 @@ async function fetchStudentData() {
       return;
     }
 
-    // Populate Info
+    // Display Student Profile Details
     const std = result.student;
-    document.getElementById("infoName").innerText = `${std.lastName}, ${std.firstName} ${std.middleName || ''}`;
+    const fullName = `${std.lastName}, ${std.firstName} ${std.middleName || ''}`.trim();
+    document.getElementById("infoName").innerText = fullName;
     document.getElementById("infoCode").innerText = std.code;
     document.getElementById("infoSection").innerText = std.section;
 
-    // Populate Grades
+    // Display Grade Details
     const g = result.grades;
     if (g) {
       document.getElementById("infoQuarter").innerText = g.quarter || "1st Quarter";
@@ -45,11 +47,13 @@ async function fetchStudentData() {
       document.getElementById("gTLE").innerText = g.tle ?? "--";
       document.getElementById("gMAPEH").innerText = g.mapeh ?? "--";
       document.getElementById("genAve").innerText = g.genAve ?? "--";
+    } else {
+      errorMsg.innerText = "Student found in enrollment, but grade record is missing.";
     }
 
     content.classList.remove("hidden");
   } catch (err) {
     loading.classList.add("hidden");
-    errorMsg.innerText = "Error fetching grade records. Please try again.";
+    errorMsg.innerText = "Unable to load data. Please check your network or API URL.";
   }
 }

@@ -79,6 +79,32 @@ header p {
   padding-bottom: 8px;
 }
 
+.card-header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+}
+
+.card-header-flex h3 {
+  margin: 0;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+#quarterSelect {
+  padding: 6px 10px;
+  border: 1px solid #004085;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #004085;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
 .student-info p {
   margin: 6px 0;
   font-size: 15px;

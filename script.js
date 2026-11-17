@@ -1,5 +1,7 @@
-// Replace with your Google Apps Script Web App URL
-const API_URL = "https://script.google.com/macros/s/AKfycbw92W3A30tsfcMwdmVrJXFKXcgMjbIgMPLdRy_z55dwfPAbCm8vWoBQm3pWTb6hTdrt/exec";
+// Replace with your published Apps Script Web App URL
+const API_URL = "YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
+
+let studentQuarterRecords = [];
 
 async function fetchStudentData() {
   const code = document.getElementById("studentCode").value.trim();
@@ -27,29 +29,50 @@ async function fetchStudentData() {
       return;
     }
 
-    const d = result.data;
-    
     // Fill Student Information
-    document.getElementById("infoName").innerText = d.name || "--";
-    document.getElementById("infoCode").innerText = d.code || "--";
-    document.getElementById("infoSex").innerText = d.sex || "--";
-    document.getElementById("infoSection").innerText = d.section || "--";
-    document.getElementById("infoQuarter").innerText = d.quarter || "1st Quarter";
+    const std = result.student;
+    document.getElementById("infoName").innerText = std.name || "--";
+    document.getElementById("infoCode").innerText = std.code || "--";
+    document.getElementById("infoSex").innerText = std.sex || "--";
+    document.getElementById("infoSection").innerText = std.section || "--";
 
-    // Fill Subject Grades
-    document.getElementById("gFilipino").innerText = d.filipino ?? "--";
-    document.getElementById("gEnglish").innerText = d.english ?? "--";
-    document.getElementById("gMath").innerText = d.math ?? "--";
-    document.getElementById("gScience").innerText = d.science ?? "--";
-    document.getElementById("gAP").innerText = d.aralingPanlipunan ?? "--";
-    document.getElementById("gESP").innerText = d.esp ?? "--";
-    document.getElementById("gTLE").innerText = d.tle ?? "--";
-    document.getElementById("gMAPEH").innerText = d.mapeh ?? "--";
-    document.getElementById("genAve").innerText = d.genAve ?? "--";
+    // Store all quarter records and populate dropdown
+    studentQuarterRecords = result.records || [];
+    const select = document.getElementById("quarterSelect");
+    select.innerHTML = "";
+
+    studentQuarterRecords.forEach((rec, index) => {
+      const option = document.createElement("option");
+      option.value = index;
+      option.text = rec.quarter;
+      select.appendChild(option);
+    });
+
+    // Default to the latest quarter (last entry in the sheet)
+    if (studentQuarterRecords.length > 0) {
+      select.value = studentQuarterRecords.length - 1;
+      displaySelectedQuarter();
+    }
 
     content.classList.remove("hidden");
   } catch (err) {
     loading.classList.add("hidden");
     errorMsg.innerText = "Unable to connect to the grade database. Check your connection or API URL.";
   }
+}
+
+function displaySelectedQuarter() {
+  const index = document.getElementById("quarterSelect").value;
+  const g = studentQuarterRecords[index];
+  if (!g) return;
+
+  document.getElementById("gFilipino").innerText = g.filipino ?? "--";
+  document.getElementById("gEnglish").innerText = g.english ?? "--";
+  document.getElementById("gMath").innerText = g.math ?? "--";
+  document.getElementById("gScience").innerText = g.science ?? "--";
+  document.getElementById("gAP").innerText = g.aralingPanlipunan ?? "--";
+  document.getElementById("gESP").innerText = g.esp ?? "--";
+  document.getElementById("gTLE").innerText = g.tle ?? "--";
+  document.getElementById("gMAPEH").innerText = g.mapeh ?? "--";
+  document.getElementById("genAve").innerText = g.genAve ?? "--";
 }
